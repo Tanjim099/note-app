@@ -1,7 +1,7 @@
 const addBtn = document.querySelector("#addBtn");
 const main = document.querySelector("#main");
 
-const saveNotes = ()=>{
+const saveNotes = () => {
     const notes = document.querySelectorAll(".note textarea");
     console.log(notes);
     const data = [];
@@ -12,13 +12,12 @@ const saveNotes = ()=>{
     localStorage.setItem("notes", JSON.stringify(data));
 }
 
-addBtn.addEventListener("click", ()=>{
-    confirm("are you want to create a new note")
+addBtn.addEventListener("click", () => {
     AddNote();
 });
 
 
-const AddNote = (text = "")=>{
+const AddNote = (text = "") => {
     const note = document.createElement("div");
     note.classList.add("note");
     note.innerHTML = `
@@ -28,24 +27,24 @@ const AddNote = (text = "")=>{
 </div>
 <textarea>${text}</textarea> `;
 
-note.querySelector(".trash").addEventListener("click", ()=>{
-    note.remove();
-    saveNotes()
-})
+    note.querySelector(".trash").addEventListener("click", () => {
+        confirm("are you sure to delete a new note")
+        note.remove();
+        saveNotes()
+    })
 
-note.querySelector(".save").addEventListener("click", ()=>{
+    note.querySelector(".save").addEventListener("click", () => {
+        saveNotes()
+    })
+    main.appendChild(note)
     saveNotes()
-})
-main.appendChild(note)
-saveNotes()
 }
 
 (
-    function(){
+    function () {
         const lsNotes = JSON.parse(localStorage.getItem("notes"));
-        // console.log(lsNotes);
 
-        lsNotes.forEach((lsNote) =>{
+        lsNotes.forEach((lsNote) => {
             AddNote(lsNote);
         })
     }
